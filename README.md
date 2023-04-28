@@ -2,6 +2,8 @@
 
 Este repositório contém todos os materiais de monitoria da disciplina de Análise Exploratória de Dados e Visualização, incluindo slides, códigos e outros recursos utilizados durante as Monitoria.
 
+Para baixar os arquivos, basta abrir seu git bash e digitar o seguinte código: `git clone git@github.com:FabricioVenturim/Monitoria-AEDV.git` e sempre que houver atualização utilizar `git pull`. Qualquer coisa, tentarei enviar os arquivos para o grupo de ADVE.
+
 ## Monitoria 0 - 27/04/2023
 
 - Aprender abrir um arquivo R Markdown;
