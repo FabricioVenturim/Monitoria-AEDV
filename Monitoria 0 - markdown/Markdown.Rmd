@@ -31,7 +31,7 @@ Sys.setlocale("LC_CTYPE", "en_US.UTF-8")
 
 O R Markdown é a junção da linguagem Markdown com o poder de códigos em R. 
 
-O camminho para criar um arquivo R markdown é: `File > New File > R Markdown`.
+O caminho para criar um arquivo R markdown é: `File > New File > R Markdown`.
 
 Uma janela será aberta, chamada New R Markdown. Coloque um título, um autor, selecione o HTML e clique em ok.
 
@@ -47,7 +47,7 @@ Agora, quando quiser gerar o HTML do seu arquivo, basta cliar em `Knit` na barra
 
 2. **Markdown** - Textos marcados com Markdown podem ser adicionados ao longo do relatório, fora das demarcações do YAMl e dos Chunks.
 
-3. **Chunks** - Nos campos de código (também chamados de chunks) podemos adicionar códigos em R (ou em algumas outras linguagens). Os chunks são delimitados por três crases, e a linguagem deve ser especificada entre chaves. Caso queira adicionar chunks com código em Python, é necessário ter o pacote {reticulate} instalado. Exemplo de um chunk que apresenta código em R:
+3. **Chunks** - Nos campos de código (também chamados de chunks) podemos adicionar códigos em R (ou em algumas outras linguagens). Os chunks são delimitados por três crases, e a linguagem deve ser especificada entre chaves. Exemplo de um chunk que apresenta código em R:
 
 ```{r}
 1 + 1 
@@ -61,7 +61,7 @@ Agora, quando quiser gerar o HTML do seu arquivo, basta cliar em `Knit` na barra
 
 ## YAML
 
-Aqui vocês irão configurar o estilo e propriedades do HTML que será gerado. Deixo dois sites se quiser personalizar do seu jeito o HTML:
+Aqui você irá configurar o estilo e propriedades do HTML que será gerado. Deixo dois sites se quiser personalizar do seu jeito o HTML:
 
 [https://cran.r-project.org/web/packages/ymlthis/vignettes/yaml-overview.html](Basic syntax)
 
@@ -71,7 +71,7 @@ Segue o exemplo que utilizo:
 
 ```
 ---
-title: "Teste1"
+title: "Markdown - Aula 0"
 author: "Fabrício"
 date: "2023-04-25"
 output: 
@@ -164,6 +164,7 @@ Você também pode adicionar sub-itens na lista indicando a hierarquia através 
 
 * Uva
 ```
+
 * Maçã
 
   * Banana
