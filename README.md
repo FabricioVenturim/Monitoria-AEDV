@@ -20,6 +20,6 @@ OBS: Recomendo ver o arquivo HTML gerado e ver o código markdown no Rstudio.
 
 ##### Atividade(mais como motivação, não vale ponto): 
 
-Deixo como atividade pegar `NotasDeAula_R` e `NotasDeAula_ggplot2` e fazer um resumo deles utilizando Markdown e ir testando os códigos aqui mesmo ou em um arquivo separado. Possivelmente a Asla já irá pedir para vocês fazerem isso em alguma atividade.
+Deixo como atividade pegar `NotasDeAula_R` e `NotasDeAula_ggplot2` e fazer um resumo deles utilizando Markdown e ir testando os códigos. Possivelmente a Asla já irá pedir para vocês fazerem isso em alguma atividade.
 
 
