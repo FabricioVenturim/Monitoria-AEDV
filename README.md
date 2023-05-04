@@ -18,8 +18,23 @@ OBS: Recomendo ver o arquivo HTML gerado e ver o código markdown no Rstudio.
 - [PNotasDeAula_R](https://ss.cursos.fgv.br/d2l/le/content/137377/viewContent/1801445/View)
 - [NotasDeAula_ggplot2](https://ss.cursos.fgv.br/d2l/le/content/137377/viewContent/1801447/View)
 
-##### Atividade(mais como motivação, não vale ponto): 
+## Monitoria 1 - 04/05/2023
 
-Deixo como atividade pegar `NotasDeAula_R` e `NotasDeAula_ggplot2` e fazer um resumo deles utilizando Markdown e ir testando os códigos. Possivelmente a Asla já irá pedir para vocês fazerem isso em alguma atividade.
+- O que é Análise Exploratória de Dados;
+- Análise Univariada(Tipo das variáveis, Medidas e Gráficos);
+- Análise Bivariada(Correlação entre variáveis, Medidas e Gráficos)
+
+OBS: Recomendo ver o arquivo HTML gerado e ver o código markdown no Rstudio.
+
+### Arquivos
+
+- [Pasta com os Arquivos](https://github.com/FabricioVenturim/Monitoria-AEDV/tree/main/Monitoria%201)
+- [R for Data Science](https://r4ds.hadley.nz/eda)
+
+### Atividade:
+
+**Refazer os gráficos aplicando melhorias e me enviar.**
+
+
 
 
