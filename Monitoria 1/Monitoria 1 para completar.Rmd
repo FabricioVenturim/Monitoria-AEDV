@@ -1,0 +1,576 @@
+---
+title: "AED Conceitos - Aula 1"
+author: "Fabrício Venturim"
+date: "2023-04-25"
+output: 
+  html_document:
+    number_sections: yes
+    highlight: tango
+    theme: cerulean
+    toc: yes
+    toc_float:
+      collapsed: yes
+      smmoth_scroll: no
+  pdf_document:
+    toc: yes
+---
+
+```{r}
+if(!require(utf8)) install.packages("utf8") 
+
+library(utf8)
+Sys.setlocale("LC_ALL", "pt_br.utf-8") 
+```
+
+
+# Análise Exploratória de Dados
+
+Aprenderemos como usar a visualização e a transformação para explorar seus dados de maneira sistemática.
+
+A Análise Exploratória de Dados (AED) é uma das etapas fundamentais no processo de análise de dados. Ela tem como objetivo compreender os dados disponíveis, identificar padrões, tendências, valores extremos e outras características importantes dos dados. A AED pode ser realizada por meio de **visualizações**, **estatísticas descritivas** e outras técnicas exploratórias.
+
+O R é uma linguagem de programação muito utilizada em análise de dados e possui diversas bibliotecas e ferramentas que facilitam a realização da AED. Uma das bibliotecas mais populares é o tidyverse, que contém uma série de pacotes que permitem a manipulação, visualização e modelagem de dados.
+
+Neste documento, iremos explorar algumas técnicas de AED utilizando o R e o tidyverse. Iremos aprender como carregar dados em R, manipulá-los e visualizá-los para obter insights valiosos sobre o conjunto de dados. Além disso, iremos explorar técnicas de limpeza e pré-processamento de dados para garantir que os dados estejam prontos para serem utilizados em análises mais avançadas.
+
+>“Far better an approximate answer to the right question, which is often vague, than an exact answer to the wrong question, which can always be made precise.” — **John Tukey**
+
+Seu objetivo durante a EDA é desenvolver uma compreensão de seus dados. A maneira mais fácil de fazer isso é usar perguntas como ferramentas para orientar sua investigação. Quando você faz uma pergunta, ela concentra sua atenção em uma parte específica do seu conjunto de dados e ajuda a decidir quais gráficos, modelos ou transformações fazer.
+
+**Uma postura crucial é compreender os conceitos fundamentais da AED, uma vez que, tendo uma compreensão clara da teoria e do processo de análise, a escolha da linguagem de programação torna-se menos relevante. Isso significa que os conceitos abordados são aplicáveis não apenas ao R, mas a outras linguagens também.**
+
+
+## Componentes da AED
+
+Existem componentes principais na exploração de dados:
+
+1. Entender suas variáveis
+2. Limpar seu conjunto de dados (Próxima aula)
+3. Analisar relações entre variáveis
+
+## Pré-requisitos
+
+Vamos importar a biblioteca do `tidyverse`.
+
+```{r}
+#
+```
+
+```{r}
+#
+```
+
+## O conjunto de dados `milsa`
+
+O livro “Estatística Básica” de W. O. Bussab e P. A. Morettin traz no segundo capítulo um conjunto de dados hipotético de atributos de 36 funcionários da companhia “Milsa”. Os dados estão reproduzidos na tabela abaixo. Consulte o livro para mais detalhes sobre este dados.
+
+Ler o csv `Tabela1.csv`:
+
+```{r}
+#
+```
+
+```{r}
+#
+```
+
+```{r}
+#
+```
+## Estrutura do Dataframe
+
+### Adicionar Colunas no Dataframe
+
+Podemos definir uma nova variável (coluna), por exemplo, chamada `Idade`, a partir das variáveis `Anos` e `Meses`:
+
+```{r}
+#
+```
+
+```{r}
+#
+```
+
+* Adicionar coluna: `table$colunaNova`
+
+* Atualizar coluna: `table$colunaAtualizar`
+
+## Excluir Coluna
+
+Também podemos excluir coluna do nosso dataframe:
+
+
+```{r}
+#
+```
+
+
+Se quiser apagar mais de uma coluna, utilize: `milsa <- subset(milsa, select = -c(Meses, Ano))`.
+
+## Mudar Nome de colunas
+
+Para ver os nomes das colunas do nosso dataframe, podemos utilizar a função `names()`.
+
+```{r}
+#
+```
+Alguns nomes estão escritos de forma estranha e pode facilitar futuras análises alterar o nome delas. Podemos alterar o nome das colunas usando um filtro no `names`:
+
+```{r}
+#
+```
+
+```{r}
+#
+```
+
+# Análise Univariada
+
+A análise univariada consiste basicamente em, para cada uma das variáveis individualmente:
+
+* Classificar a variável quanto a seu tipo: qualitativa (nominal ou ordinal) ou quantitativa (discreta ou contínua).
+* Obter tabelas, gráficos e/ou medidas que resumam a variável.
+
+A partir destes resultados pode-se montar um resumo geral dos dados.
+
+A seguir vamos mostrar como obter tabelas, gráficos e medidas com o R. 
+
+## Compreenção das suas variáveis
+
+Uma boa forma de iniciar uma análise exploratória adequada é verificar os tipos de variáveis disponíveis. Variáveis podem ser classificadas da seguinte forma:
+
+* Qualitativas
+  * Nominais
+  * Ordinais
+* Quantitativas
+  * Discretas
+  * Contínuas
+
+e podem ser resumidas por tabelas, gráficos e/ou medidas.
+
+### Arrumando a Estrutura do dataframe
+
+A função `str()` em R é uma função útil para examinar a estrutura de um objeto e exibir informações sobre seu conteúdo. "str" significa "structure" em inglês.
+
+Quando você aplica a função `str()` a um objeto em R, a função retorna informações sobre o tipo de objeto, seu comprimento, dimensões (se for uma matriz, array ou dataframe), nomes de coluna ou linha (se aplicável), e uma prévia do conteúdo do objeto. A saída fornecida pela função str() pode ajudar a entender melhor a estrutura dos dados e como eles estão organizados.
+
+```{r}
+#
+```
+
+Podemos classificar todas as variáveis desse conjunto de dados como:
+
+* **Funcionario**:	Quantitativa discreta
+* **Estado.Civil**:	Qualitativa nominal
+* **Grau.de.Instrucao**:	Qualitativa ordinal
+* **Filhos**:	Quantitativa discreta
+* **Salario**:	Quantitativa contínua
+* **Anos**:	Quantitativa discreta
+* **Meses**:	Quantitativa discreta
+* **Regiao.de.Procedencia**:	Qualitativa nominal
+
+No R, temos que cada tipo de variável é representada por: 
+
+* **Quantitativa contínua**: `num`
+* **Quantitativa discreta**: `int`
+* **Qualitativa nominal**: `factor`
+* **Qualitativa ordinal**:	`ordered factor`
+
+A correta especificação do tipo das variáveis em R é fundamental para realizar uma análise exploratória de dados precisa e completa.
+
+Ao importar dados em R, por exemplo, é importante verificar se as variáveis foram importadas com o tipo correto (por exemplo, como numéricas ou como fatores). Se as variáveis não estiverem corretamente especificadas, a análise exploratória pode ser prejudicada, pois as estatísticas descritivas, gráficos e outras análises podem não refletir adequadamente as características dos dados.
+
+Por exemplo, é importante trocar uma variável categórica do tipo "character" para "factor" em R por algumas razões:
+
+1. Os fatores têm uma estrutura interna otimizada que facilita a manipulação e análise de dados categóricos em R, em comparação com variáveis do tipo "character".
+
+2. A transformação da variável "character" em "factor" permite a aplicação de funções específicas de análise de dados categóricos em R, como a função table() para a criação de tabelas de frequência e a função aggregate() para a agregação de dados categóricos por grupos.
+
+3. Quando uma variável categórica é definida como um "factor", R reconhece imediatamente a natureza categórica da variável e permite que as funções e procedimentos que trabalham com dados categóricos sejam aplicados a essa variável de forma mais eficiente e precisa.
+
+4. A especificação correta do tipo de variável também pode melhorar a legibilidade do código, facilitando a comunicação entre membros da equipe que trabalham com análise de dados.
+
+Em resumo, a transformação de variáveis categóricas do tipo "character" para "factor" em R é importante para facilitar a manipulação, análise e visualização de dados categóricos de maneira mais eficiente e precisa, além de melhorar a legibilidade do código e a comunicação entre membros da equipe.
+
+Olhando novamente para as informações, podemos reparar que algumas não estão corretas:
+
+```{r}
+#
+```
+Temos que trocar `Estado.Civil` e `Região.de.Procedência` de `chr` para `factor`e `Grau.de.Instrução` para `ordered factor`:
+
+```{r}
+#
+```
+
+```{r}
+#
+```
+Se quiser ver um tipo de uma variável isolada, basta usar `class()`:
+
+```{r}
+#
+```
+
+```{r}
+#
+```
+
+```{r}
+#
+```
+
+## Variável Qualitativa Nominal
+
+A variável `Estado_Civil` é uma **qualitativa nominal**. Desta forma podemos obter: 
+
+1. Uma tabela de frequências (absolutas e/ou relativas).
+2. Um gráfico de setores.
+3. A “moda”.
+
+### Frequência absoluta
+
+```{r}
+#
+```
+
+### Frequência relativa
+
+```{r}
+#
+```
+
+### Gráfico de Frequência
+
+Os gráficos de barras é adequado para representar esta variável. Vamos usar o `ggplot` para isso:
+
+
+```{r}
+#
+```
+
+
+```{r}
+#
+```
+
+### Moda
+
+A moda de qualquer variável aleatória é definida como o valor mais frequente encontrado na amostra. No R não há uma função pronta para “calcular” a moda, pois ela pode ser obtida facilmente através do uso de funções básicas. Uma opção seria usar os comandos abaixo:
+
+```{r}
+#
+```
+
+```{r}
+#
+```
+
+## Variável Qualitativa Ordinal
+
+Para exemplificar como obter análises para uma variável qualitativa ordinal vamos selecionar a variável `Grau.de.Instrucao`.
+
+### Frequência absoluta
+
+As tabelas de frequências são obtidas de forma semelhante à mostrada anteriormente.
+
+```{r}
+#inst_tb <- table(milsa$Grau_Instrucao)
+#inst_tb
+```
+### Frequência relativa
+
+```{r}
+#prop.table(inst_tb)
+```
+
+### Gráfico de Frequência
+
+Os gráficos de barras é adequado para representar esta variável. Vamos usar o `ggplot` para isso:
+
+
+```{r}
+#
+```
+
+E se a gente quiser ordenar nossas barras? **Vai ficar como atividade**
+
+### Moda
+
+```{r}
+#names(inst_tb)[which.max(inst_tb)]
+```
+
+## Variável Quantitativa Discreta
+
+Vamos agora usar a variável `Filhos` (número de filhos) para ilustrar algumas análises que podem ser feitas com uma quantitativa discreta.
+
+Frequências absolutas e relativas são obtidas como anteriormente. Também vamos calcular a frequência acumulada, onde a frequência em uma classe é a soma das frequências das classes anteriores. Para isso usamos a função `cumsum()`, que já faz a soma acumulada.
+
+```{r}
+#filhos_tb <- table(milsa$Filhos)
+#filhos_tb
+```
+
+```{r}
+#filhos_tbr <- prop.table(filhos_tb)
+#filhos_tbr
+```
+
+### Frequência Acumulada
+
+```{r}
+#
+```
+### Gráfico de Frequência
+
+O gráfico adequado para frequências absolutas de uma variável discreta é parecido com um gráfico de barras, mas nesse caso, as frequências são indicadas por linhas. 
+
+```{r}
+#
+```
+
+### Frequência relativa acumulada
+
+
+```{r}
+#
+```
+
+
+```{r}
+#
+```
+
+
+```{r}
+#
+```
+
+```{r}
+#
+```
+
+### Medidas (moda, mediana e média)
+
+```{r}
+#
+```
+
+```{r}
+#
+```
+
+```{r}
+#
+```
+
+### Quartis
+
+```{r}
+#
+```
+
+```{r}
+#
+```
+
+### Forma Prática
+
+Podemos usar a função genérica `summary()` para resumir os dados de uma só vez:
+
+```{r}
+#
+```
+
+### Variância
+
+```{r}
+#
+```
+
+### Desvio-padrão
+
+```{r}
+#
+```
+
+## Variável Quantitativa Contínua
+
+Para concluir os exemplos para análise univariada vamos considerar a variável quantitativa contínua `Salario`.
+
+O que podemos fazer de diferente é plotar um histograma e um boxplot:
+
+### Histograma
+
+```{r}
+#
+```
+
+### BoxPlots
+  
+Os boxplots são úteis para revelar o centro, a dispersão e a distribuição dos dados, além de outliers. 
+  
+```{r}
+#
+```
+
+
+```{r}
+#
+```
+
+## Valores Típicos
+
+Tanto nos gráficos de barras quanto nos histogramas, as barras altas mostram os valores comuns de uma variável e as barras mais curtas mostram os valores menos comuns. Locais que não possuem barras revelam valores que não foram vistos em seus dados. Para transformar essas informações em perguntas úteis, procure algo inesperado:
+
+* Quais valores são os mais comuns? Por que?
+
+* Quais valores são raros? Por que? Isso corresponde às suas expectativas?
+
+* Você consegue ver algum padrão incomum? O que pode explicá-los?
+
+
+### Exemplo
+
+```{r}
+#
+```
+
+* Por que há mais diamantes em quilates inteiros e frações comuns de quilates?
+
+* Por que há mais diamantes ligeiramente à direita de cada pico do que ligeiramente à esquerda de cada pico?
+
+* Por que não existem diamantes maiores que 3 quilates?
+
+## Valores incomuns
+
+Outliers são observações incomuns; pontos de dados que não parecem se encaixar no padrão. Às vezes, outliers são erros de entrada de dados; outras vezes, outliers sugerem uma nova ciência importante. Quando você tem muitos dados, às vezes é difícil ver outliers em um histograma. Por exemplo, pegue a distribuição da yvariável do conjunto de dados de diamantes. A única evidência de outliers são os limites incomumente amplos no eixo x.
+
+```{r}
+#
+```
+
+```{r}
+#
+```
+
+É uma boa prática repetir sua análise com e sem os outliers. Se eles tiverem um efeito mínimo nos resultados e você não conseguir descobrir por que eles estão lá, é razoável substituí-los por valores ausentes e seguir em frente. No entanto, se eles tiverem um efeito substancial em seus resultados, você não deve abandoná-los sem justificativa. Você precisará descobrir o que os causou (por exemplo, um erro de entrada de dados).
+
+**Veremos mais sobre o que fazer com esses valores na próxima monitoria**
+
+## Valores Ausentes
+
+**Próxima aula (Tratamento de dados)**
+
+# Análise Bivariada
+
+Na análise bivariada procuramos identificar relações entre duas variáveis. Assim como na análise univariada, estas relações podem ser resumidas por gráficos, tabelas e/ou medidas estatísticas. O tipo de resumo vai depender dos tipos das variáveis envolvidas. Vamos considerar três possibilidades:
+
+* Qualitativa vs qualitativa
+* Qualitativa vs quantitativa
+* Quantitativa vs quantitativa
+
+
+## Qualitativa vs Qualitativa
+
+Vamos considerar as variáveis `Estado.civil` (estado civil), e `Grau.de.Instrução` (grau de instrução). A tabela envolvendo duas variáveis é chamada tabela de cruzamento ou tabela de contingência, e pode ser apresentada de várias formas, conforme discutido a seguir.
+
+A forma mais adequada de apresentação vai depender dos objetivos da análise e da interpretação desejada para os dados. Iniciamente obtemos a tabela de frequências absolutas para o cruzamento das duas variávies, usando a função `table()`.
+
+
+```{r}
+#
+```
+
+Podemos adicionar os totais:
+
+```{r}
+#
+```
+
+Tabelas de frequências relativas são obtidas com prop.table(), mas aqui existem três possibilidades para as proporções em cada casela:
+
+* Em relação ao total geral
+* Em relação aos totais por linha (margin = 1)
+* Em relação aos totais por coluna (margin = 2)
+
+```{r}
+#
+```
+
+```{r}
+#
+```
+
+
+```{r}
+#
+```
+
+
+### Representação Gráfica
+
+```{r}
+#
+```
+
+```{r}
+#
+```
+
+O tamanho de cada círculo no gráfico exibe quantas observações ocorreram em cada combinação de valores. A covariação aparecerá como uma forte correlação entre valores específicos de x e valores específicos de y.
+
+Outra abordagem é calcular a contagem e em seguida, visualize com `geom_tile()` e a estética de preenchimento:
+
+```{r}
+#
+```
+
+A função `count()` é usada para contar as ocorrências de cada combinação de valores nas colunas `color` e `cut` do dataframe diamonds, que é salvo na variável data. Em seguida, é criado o gráfico usando o `ggplot()`, especificando o dataframe data e os eixos x e y. A camada de tiles é adicionada usando a função `geom_tile()`, e a variável `n` é mapeada para a cor de preenchimento das tiles. Note que data é especificado explicitamente dentro de `geom_tile()`, para que o ggplot saiba qual dataframe usar para mapear as variáveis.
+
+
+## Qualitativa vs Quantitativa
+
+Para exemplificar este caso vamos considerar as variáveis `Grau.de.Instrucao` e `Salario`.
+
+É comum querer explorar a distribuição de uma variável contínua decomposta por uma variável categórica.
+
+No gráfico vamos considerar que neste exemplo a instrução deve ser a variável explicativa e portanto colocada no eixo X, e o salário é a variável resposta, e portanto deve ser colocada no eixo Y. Isto é, consideramos que a instrução deve explicar, ainda que parcialmente, o salário (e não o contrário!).
+
+Vamos então obter um boxplot dos salários para cada nível de instrução. 
+
+
+```{r}
+#
+```
+
+
+## Quantitativa vs Quantitativa
+
+Para ilustrar este caso vamos considerar as variáveis `Salario` e `Idade`.
+
+Você já viu uma ótima maneira de visualizar a covariação entre duas variáveis contínuas: desenhe um gráfico de dispersão. Você pode ver a covariação como um padrão nos pontos.
+
+```{r}
+#
+```
+
+Podemos calcular a correlação entre essas duas variáveis:
+
+```{r}
+#
+```
+
+
+```{r}
+#
+```
+
+```{r}
+#
+```
+
+```{r}
+#
+```
