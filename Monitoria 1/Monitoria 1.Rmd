@@ -53,11 +53,15 @@ Existem componentes principais na exploração de dados:
 Vamos importar a biblioteca do `tidyverse`.
 
 ```{r}
-#
+#if(!require(tidyverse)){
+#  install.packages("tidyverse")
+#}
+
+if(!require(tidyverse)) install.packages("tidyverse")
 ```
 
 ```{r}
-#
+library(tidyverse)
 ```
 
 ## O conjunto de dados `milsa`
@@ -67,15 +71,15 @@ O livro “Estatística Básica” de W. O. Bussab e P. A. Morettin traz no segu
 Ler o csv `Tabela1.csv`:
 
 ```{r}
-#
+milsa <- read.csv("data/Tabela1.csv")
 ```
 
 ```{r}
-#
+head(milsa)
 ```
 
 ```{r}
-#
+tail(milsa)
 ```
 ## Estrutura do Dataframe
 
@@ -84,11 +88,11 @@ Ler o csv `Tabela1.csv`:
 Podemos definir uma nova variável (coluna), por exemplo, chamada `Idade`, a partir das variáveis `Anos` e `Meses`:
 
 ```{r}
-#
+milsa$Idade <- milsa$Anos + milsa$Meses/12
 ```
 
 ```{r}
-#
+milsa
 ```
 
 * Adicionar coluna: `table$colunaNova`
@@ -101,7 +105,7 @@ Também podemos excluir coluna do nosso dataframe:
 
 
 ```{r}
-#
+milsa <- subset(milsa, select = -X)
 ```
 
 
@@ -112,16 +116,20 @@ Se quiser apagar mais de uma coluna, utilize: `milsa <- subset(milsa, select = -
 Para ver os nomes das colunas do nosso dataframe, podemos utilizar a função `names()`.
 
 ```{r}
-#
+names(milsa)
 ```
 Alguns nomes estão escritos de forma estranha e pode facilitar futuras análises alterar o nome delas. Podemos alterar o nome das colunas usando um filtro no `names`:
 
 ```{r}
-#
+names(milsa)[names(milsa) == "Salario..x.Sal.Min."] <- "Salario"
+names(milsa)[names(milsa) == "N.de.Filhos"] <- "Filhos"
+names(milsa)[names(milsa) == "Grau.de.Instrução"] <- "Grau_Instrucao"
+names(milsa)[names(milsa) == "Região.de.Procedência"] <- "Regiao_Procedencia"
+names(milsa)[names(milsa) == "Estado.Civil"] <- "Estado_Civil"
 ```
 
 ```{r}
-#
+milsa
 ```
 
 # Análise Univariada
@@ -155,9 +163,8 @@ A função `str()` em R é uma função útil para examinar a estrutura de um ob
 Quando você aplica a função `str()` a um objeto em R, a função retorna informações sobre o tipo de objeto, seu comprimento, dimensões (se for uma matriz, array ou dataframe), nomes de coluna ou linha (se aplicável), e uma prévia do conteúdo do objeto. A saída fornecida pela função str() pode ajudar a entender melhor a estrutura dos dados e como eles estão organizados.
 
 ```{r}
-#
+str(milsa)
 ```
-
 Podemos classificar todas as variáveis desse conjunto de dados como:
 
 * **Funcionario**:	Quantitativa discreta
@@ -195,29 +202,31 @@ Em resumo, a transformação de variáveis categóricas do tipo "character" para
 Olhando novamente para as informações, podemos reparar que algumas não estão corretas:
 
 ```{r}
-#
+str(milsa)
 ```
 Temos que trocar `Estado.Civil` e `Região.de.Procedência` de `chr` para `factor`e `Grau.de.Instrução` para `ordered factor`:
 
 ```{r}
-#
+milsa$Estado_Civil <- factor(milsa$Estado_Civil)
+milsa$Regiao_Procedencia <- factor(milsa$Regiao_Procedencia)
+milsa$Grau_Instrucao <- factor(milsa$Grau_Instrucao, ordered = TRUE)
 ```
 
 ```{r}
-#
+str(milsa)
 ```
 Se quiser ver um tipo de uma variável isolada, basta usar `class()`:
 
 ```{r}
-#
+class(milsa$Grau_Instrucao)
 ```
 
 ```{r}
-#
+milsa$Grau_Instrucao
 ```
 
 ```{r}
-#
+milsa$Estado_Civil
 ```
 
 ## Variável Qualitativa Nominal
@@ -231,13 +240,14 @@ A variável `Estado_Civil` é uma **qualitativa nominal**. Desta forma podemos o
 ### Frequência absoluta
 
 ```{r}
-#
+civil_tb = table(milsa$Estado_Civil)
+civil_tb
 ```
 
 ### Frequência relativa
 
 ```{r}
-#
+prop.table(civil_tb)
 ```
 
 ### Gráfico de Frequência
@@ -246,12 +256,14 @@ Os gráficos de barras é adequado para representar esta variável. Vamos usar o
 
 
 ```{r}
-#
+graf <- ggplot(milsa, aes(x = Estado_Civil))
+graf
 ```
 
 
 ```{r}
-#
+graf <- graf + geom_bar()
+graf
 ```
 
 ### Moda
@@ -259,11 +271,11 @@ Os gráficos de barras é adequado para representar esta variável. Vamos usar o
 A moda de qualquer variável aleatória é definida como o valor mais frequente encontrado na amostra. No R não há uma função pronta para “calcular” a moda, pois ela pode ser obtida facilmente através do uso de funções básicas. Uma opção seria usar os comandos abaixo:
 
 ```{r}
-#
+civil_tb
 ```
 
 ```{r}
-#
+names(civil_tb)[which.max(civil_tb)]
 ```
 
 ## Variável Qualitativa Ordinal
@@ -275,13 +287,13 @@ Para exemplificar como obter análises para uma variável qualitativa ordinal va
 As tabelas de frequências são obtidas de forma semelhante à mostrada anteriormente.
 
 ```{r}
-#inst_tb <- table(milsa$Grau_Instrucao)
-#inst_tb
+inst_tb <- table(milsa$Grau_Instrucao)
+inst_tb
 ```
 ### Frequência relativa
 
 ```{r}
-#prop.table(inst_tb)
+prop.table(inst_tb)
 ```
 
 ### Gráfico de Frequência
@@ -290,7 +302,8 @@ Os gráficos de barras é adequado para representar esta variável. Vamos usar o
 
 
 ```{r}
-#
+graf <- ggplot(milsa, aes(x = Grau_Instrucao)) + geom_bar()
+graf
 ```
 
 E se a gente quiser ordenar nossas barras? **Vai ficar como atividade**
@@ -298,7 +311,7 @@ E se a gente quiser ordenar nossas barras? **Vai ficar como atividade**
 ### Moda
 
 ```{r}
-#names(inst_tb)[which.max(inst_tb)]
+names(inst_tb)[which.max(inst_tb)]
 ```
 
 ## Variável Quantitativa Discreta
@@ -308,71 +321,78 @@ Vamos agora usar a variável `Filhos` (número de filhos) para ilustrar algumas 
 Frequências absolutas e relativas são obtidas como anteriormente. Também vamos calcular a frequência acumulada, onde a frequência em uma classe é a soma das frequências das classes anteriores. Para isso usamos a função `cumsum()`, que já faz a soma acumulada.
 
 ```{r}
-#filhos_tb <- table(milsa$Filhos)
-#filhos_tb
+filhos_tb <- table(milsa$Filhos)
+filhos_tb
 ```
 
 ```{r}
-#filhos_tbr <- prop.table(filhos_tb)
-#filhos_tbr
+filhos_tbr <- prop.table(filhos_tb)
+filhos_tbr
 ```
 
 ### Frequência Acumulada
 
 ```{r}
-#
+freq_rel_acum <- cumsum(filhos_tbr)
+freq_rel_acum
 ```
 ### Gráfico de Frequência
 
 O gráfico adequado para frequências absolutas de uma variável discreta é parecido com um gráfico de barras, mas nesse caso, as frequências são indicadas por linhas. 
 
 ```{r}
-#
+ggplot(milsa, aes(x = Filhos)) + geom_bar()
 ```
 
 ### Frequência relativa acumulada
 
 
 ```{r}
-#
+freq_rel_acum
 ```
 
 
 ```{r}
-#
+df <- data.frame(x = names(freq_rel_acum), y = freq_rel_acum)
+df
 ```
 
 
 ```{r}
-#
+graf <- ggplot(df, aes(x, y)) + 
+  geom_point() + 
+  geom_step(group=1) 
+
+graf
 ```
 
 ```{r}
-#
+graf <- graf + ylim(0, NA)
+graf
 ```
 
 ### Medidas (moda, mediana e média)
 
 ```{r}
-#
+names(filhos_tb)[which.max(filhos_tb)]
 ```
 
 ```{r}
-#
+median(milsa$Filhos)
 ```
 
 ```{r}
-#
+mean(milsa$Filhos)
 ```
-
 ### Quartis
 
 ```{r}
-#
+quantile(milsa$Filhos)
 ```
 
 ```{r}
-#
+n <- sum(milsa$Filhos <= 1)
+n
 ```
 
 ### Forma Prática
@@ -380,19 +400,17 @@ O gráfico adequado para frequências absolutas de uma variável discreta é par
 Podemos usar a função genérica `summary()` para resumir os dados de uma só vez:
 
 ```{r}
-#
+summary(milsa$Filhos)
 ```
-
 ### Variância
 
 ```{r}
-#
+var(milsa$Filhos)
 ```
-
 ### Desvio-padrão
 
 ```{r}
-#
+sd(milsa$Filhos)
 ```
 
 ## Variável Quantitativa Contínua
@@ -404,7 +422,7 @@ O que podemos fazer de diferente é plotar um histograma e um boxplot:
 ### Histograma
 
 ```{r}
-#
+ggplot(milsa, aes(Salario)) + geom_histogram(bins = 10)
 ```
 
 ### BoxPlots
@@ -412,12 +430,12 @@ O que podemos fazer de diferente é plotar um histograma e um boxplot:
 Os boxplots são úteis para revelar o centro, a dispersão e a distribuição dos dados, além de outliers. 
   
 ```{r}
-#
+ggplot(milsa, aes(x = Salario)) + geom_boxplot()
 ```
 
 
 ```{r}
-#
+ggplot(milsa, aes(y = Salario)) + geom_boxplot()
 ```
 
 ## Valores Típicos
@@ -434,7 +452,10 @@ Tanto nos gráficos de barras quanto nos histogramas, as barras altas mostram os
 ### Exemplo
 
 ```{r}
-#
+graf <- ggplot(data = diamonds, mapping = aes(x = carat)) +
+  geom_histogram(binwidth = 0.01)
+
+graf
 ```
 
 * Por que há mais diamantes em quilates inteiros e frações comuns de quilates?
@@ -448,11 +469,13 @@ Tanto nos gráficos de barras quanto nos histogramas, as barras altas mostram os
 Outliers são observações incomuns; pontos de dados que não parecem se encaixar no padrão. Às vezes, outliers são erros de entrada de dados; outras vezes, outliers sugerem uma nova ciência importante. Quando você tem muitos dados, às vezes é difícil ver outliers em um histograma. Por exemplo, pegue a distribuição da yvariável do conjunto de dados de diamantes. A única evidência de outliers são os limites incomumente amplos no eixo x.
 
 ```{r}
-#
+ggplot(diamonds, aes(x = y)) + 
+  geom_histogram(binwidth = 0.5)
 ```
 
 ```{r}
-#
+ggplot(diamonds, aes(x = y)) +
+  geom_boxplot()
 ```
 
 É uma boa prática repetir sua análise com e sem os outliers. Se eles tiverem um efeito mínimo nos resultados e você não conseguir descobrir por que eles estão lá, é razoável substituí-los por valores ausentes e seguir em frente. No entanto, se eles tiverem um efeito substancial em seus resultados, você não deve abandoná-los sem justificativa. Você precisará descobrir o que os causou (por exemplo, um erro de entrada de dados).
@@ -480,13 +503,14 @@ A forma mais adequada de apresentação vai depender dos objetivos da análise e
 
 
 ```{r}
-#
+civ_inst_tb <- table(milsa$Estado_Civil, milsa$Grau_Instrucao)
+civ_inst_tb
 ```
 
 Podemos adicionar os totais:
 
 ```{r}
-#
+addmargins(civ_inst_tb)
 ```
 
 Tabelas de frequências relativas são obtidas com prop.table(), mas aqui existem três possibilidades para as proporções em cada casela:
@@ -496,27 +520,30 @@ Tabelas de frequências relativas são obtidas com prop.table(), mas aqui existe
 * Em relação aos totais por coluna (margin = 2)
 
 ```{r}
-#
+prop_civ_inst_tb = prop.table(civ_inst_tb)
+addmargins(prop_civ_inst_tb)
 ```
 
 ```{r}
-#
+prop_civ_inst_tb = prop.table(civ_inst_tb, margin = 1)
+addmargins(prop_civ_inst_tb)
 ```
 
 
 ```{r}
-#
+prop_civ_inst_tb = prop.table(civ_inst_tb, margin = 2)
+addmargins(prop_civ_inst_tb)
 ```
 
 
 ### Representação Gráfica
 
 ```{r}
-#
+ggplot(milsa, aes(x = Estado_Civil, y = Grau_Instrucao)) + geom_count()
 ```
 
 ```{r}
-#
+ggplot(data = diamonds, mapping = aes(x = cut, y = color)) + geom_count()
 ```
 
 O tamanho de cada círculo no gráfico exibe quantas observações ocorreram em cada combinação de valores. A covariação aparecerá como uma forte correlação entre valores específicos de x e valores específicos de y.
@@ -524,7 +551,8 @@ O tamanho de cada círculo no gráfico exibe quantas observações ocorreram em 
 Outra abordagem é calcular a contagem e em seguida, visualize com `geom_tile()` e a estética de preenchimento:
 
 ```{r}
-#
+data <- count(diamonds, color, cut)
+ggplot(data, aes(x = cut, y = color)) + geom_tile(aes(fill = n))
 ```
 
 A função `count()` é usada para contar as ocorrências de cada combinação de valores nas colunas `color` e `cut` do dataframe diamonds, que é salvo na variável data. Em seguida, é criado o gráfico usando o `ggplot()`, especificando o dataframe data e os eixos x e y. A camada de tiles é adicionada usando a função `geom_tile()`, e a variável `n` é mapeada para a cor de preenchimento das tiles. Note que data é especificado explicitamente dentro de `geom_tile()`, para que o ggplot saiba qual dataframe usar para mapear as variáveis.
@@ -542,7 +570,7 @@ Vamos então obter um boxplot dos salários para cada nível de instrução.
 
 
 ```{r}
-#
+ggplot(milsa, aes(x = Grau_Instrucao, y = Salario)) + geom_boxplot() 
 ```
 
 
@@ -553,24 +581,25 @@ Para ilustrar este caso vamos considerar as variáveis `Salario` e `Idade`.
 Você já viu uma ótima maneira de visualizar a covariação entre duas variáveis contínuas: desenhe um gráfico de dispersão. Você pode ver a covariação como um padrão nos pontos.
 
 ```{r}
-#
+ggplot(data = milsa, aes(x = Idade, y = Salario)) + geom_point()
 ```
 
 Podemos calcular a correlação entre essas duas variáveis:
 
 ```{r}
-#
+cor(milsa$Salario, milsa$Idade)
 ```
 
 
 ```{r}
-#
+ggplot(data = diamonds, mapping = aes(x = carat, y = price)) + geom_point()
 ```
 
 ```{r}
-#
+ggplot(data = diamonds) + 
+  geom_point(mapping = aes(x = carat, y = price), alpha = 1 / 100)
 ```
 
 ```{r}
-#
+cor(diamonds$carat, diamonds$price)
 ```
