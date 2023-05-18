@@ -1,0 +1,337 @@
+---
+title: "AED DPLYR - Aula 2"
+author: "Fabrício Venturim"
+date: "2023-05-17"
+output: 
+  html_document:
+    number_sections: yes
+    highlight: tango
+    theme: cerulean
+    toc: yes
+    toc_float:
+      collapsed: yes
+      smmoth_scroll: no
+    css: styles.css
+  pdf_document:
+    toc: yes
+---
+
+```{r}
+if(!require(utf8)) install.packages("utf8") 
+
+library(utf8)
+Sys.setlocale("LC_ALL", "pt_br.utf-8") 
+```
+
+```{r}
+if(!require(tidyverse)) install.packages("tidyverse")
+library("tidyverse")
+```
+
+# Motivação
+
+Neste material, abordaremos três elementos fundamentais para a criação e visualização de gráficos no R e que serão de extrema importancia para as tarefas e para a A2: o operador de pipe (%>%), as principais funções do pacote dplyr e o conceito de facetamento.
+
+Gráficos são poderosas ferramentas para comunicar informações e insights a partir dos dados. A capacidade de criar visualizações eficazes é essencial em muitos campos.
+
+Ao dominar o operador de pipe, as principais funções do dplyr e o conceito de facetamento, você estará equipado para criar gráficos sofisticados e informativos para seus trabalhos, relatórios e apresentações. Essas ferramentas fornecem uma base sólida para explorar e comunicar insights a partir dos dados, ajudando a tornar suas visualizações mais poderosas e eficazes.
+
+Vamos agora explorar cada um desses elementos em detalhes, fornecendo exemplos práticos e dicas para aprimorar suas habilidades de visualização no R.
+
+
+#  Operador pipe `%>%`
+
+O operador `%>%` (pipe) foi uma das grandes revoluções recentes do R, tornando a escrita e leitura de códigos mais intuitiva e compreensível.
+
+É importante compreender seu funcionamento, pelo menos, para conseguir ler códigos da internet e entender como funcionam
+
+![](img/pipe.jpg)
+
+A ideia do operador `%>%` (pipe) é bem simples: usar o valor resultante da expressão do lado esquerdo como primeiro argumento da função do lado direito.
+
+```{r}
+#
+```
+
+```{r}
+#
+```
+
+```{r}
+#
+```
+
+```{r}
+#
+```
+Nos casos mais simples, o pipe parece não trazer grandes vantagens. Agora, veja como fica um caso com mais etapas.
+
+Vamos calcular a raiz quadrada da soma dos valores de 1 a 4. Primeiro, sem o pipe.
+
+```{r}
+#
+```
+
+```{r}
+#
+```
+
+O caminho que o código `x %>% sum %>% sqrt` seguiu foi enviar o objeto `x` como argumento da função `sum()` e, em seguida, enviar a saida da expressão `sum(x)` como argumento da função `sqrt()`. Observe que escrevemos o código na mesma ordem em que as operações são realizadas. A utilização de parênteses após o nome das funções não é necessário, mas recomendável.
+
+## Receita de Bolo
+
+Ingredientes:
+
+* 2 xícaras de farinha
+* 1/2 xícara de água
+* 1 colher de chá de fermento
+* 1/2 xícara de leite
+* 2 colheres de sopa de óleo
+
+Instruções:
+
+
+1. Em um recipiente, misture as 2 xícaras de farinha, a água, o fermento, o leite e o óleo. Bata bem até obter uma massa macia.
+
+2. Adicione mais farinha à massa até que fique macia e fácil de manusear. Continue batendo até obter a consistência desejada.
+
+3. Despeje a massa em uma forma grande previamente untada.
+
+4. Asse no forno por aproximadamente 50 minutos, ou até que o bolo fique dourado e firme ao toque.
+
+5. Retire o bolo do forno e deixe esfriar em temperatura ambiente por cerca de 20 minutos.
+
+6. Transfira o bolo para a geladeira e deixe esfriar por mais 20 minutos antes de servir.
+
+
+
+```
+esfrie(
+  asse(
+    coloque(
+      bata(
+        acrescente(
+          recipiente(
+            rep("farinha", 2), 
+            "água", 
+            "fermento", 
+            "leite", 
+            "óleo"
+          ), 
+          "farinha", 
+          ate = "macio"
+        ), 
+        duracao = "3min"
+      ), 
+      lugar = "forma", 
+      tipo = "grande", 
+      untada = TRUE
+    ), 
+    duracao = "50min"
+  ), 
+  lugar = "geladeira", 
+  duracao = "20min"
+)
+```
+
+```
+recipiente(rep("farinha", 2), "água", "fermento", "leite", "óleo") %>%
+  acrescente("farinha", ate = "macio") %>%
+  bata(duracao = "3min") %>%
+  coloque(lugar = "forma", tipo = "grande", untada = TRUE) %>%
+  asse(duracao = "50min") %>%
+  esfrie(lugar = "geladeira", duracao = "20min")
+```
+
+Iremos utilizar mais ele ao estudar as funções do `Dplyr`.
+
+# DPLYR
+
+`Dplyr` é um pacote complementar para a linguagem de programação R. O dplyrpacote é um kit de ferramentas exclusivo para manipulação de dados. Mais especificamente, é um kit de ferramentas para realizar as tarefas de manipulação de dados que listei acima. Ele tem uma função para cada uma dessas tarefas principais de manipulação de dados:
+
+* **select():** seleciona colunas de dados
+* **arrange():** classifica os dados
+* **mutate():** cria novas variáveis
+* **filter():** subconjuntos de linhas de dados
+* **group_by():** dados agregados
+* **summarise():** resume dados (cálculo de estatísticas resumidas)
+
+
+## `select()`
+
+No R, a função `select()` faz parte do pacote dplyr e é usada para selecionar colunas específicas de um data frame. Ela permite criar um novo data frame contendo apenas as colunas desejadas ou descartar colunas indesejadas de um data frame existente.
+
+Selecionando apenas as colunas "mpg", "cyl" e "gear" do dataframe mtcars
+
+```{r}
+#
+```
+
+
+```{r}
+#
+```
+
+```{r}
+#
+```
+
+
+## `arrange()`
+
+A [`arrange()`](https://dplyr.tidyverse.org/reference/arrange.html) permite ordenar as linhas de um data frame com base nos valores de uma ou mais colunas.
+
+```{r}
+#
+```
+
+```{r}
+#
+```
+
+```{r}
+#
+```
+
+## `mutate()`
+
+O que faz: adiciona novas colunas ou modifica as variáveis atuais no conjunto de dados.
+
+```{r}
+#
+```
+
+```{r}
+#
+```
+
+```{r}
+#
+```
+
+### Exemplo 1
+
+Qual é a distribuição de carros por classe de potência, de acordo com os dados do conjunto de dados `mtcars`, onde a classe de potência é definida como "Alta Potência" se a variável `hp` for maior ou igual a 200, e como "Baixa Potência" caso contrário?
+
+```{r}
+#
+```
+
+
+```{r}
+#
+```
+
+### Exemplo 2
+
+Utilizando a base de dados "mtcars" do R, crie uma nova coluna chamada "km/litro" que represente a velocidade máxima do carro em quilômetros por hora. Considere que a velocidade máxima está representada na base de dados em milhas por hora (mph) e que a conversão é dada pela fórmula: velocidade (km/h) = velocidade (mph) * 1.60934. Em seguida, crie um gráfico de dispersão onde o eixo x represente o peso do carro (wt) e o eixo y represente a velocidade máxima em quilômetros por hora (Velocidade_km_h). Adicione etiquetas nos eixos e um título ao gráfico.
+
+```{r}
+#
+```
+
+Como a variável de km/litro (`mpg`) se relaciona com o peso (`wt`) dos carros no conjunto de dados "mtcars", considerando que o consumo de combustível está em milhas/litro (multiplicando por 1.60934)? Apresente essa relação visualmente através de um gráfico de dispersão.
+
+```{r}
+#
+```
+
+## `filter()`
+
+A função `filter` é uma função do pacote dplyr do R, utilizada para filtrar observações (linhas) de um data frame com base em determinadas condições. Ela permite selecionar apenas as linhas que atendem a certos critérios especificados pelo usuário.
+
+Ao usar a função filter, você especifica uma ou mais condições lógicas para selecionar as linhas desejadas. Essas condições podem ser expressões simples, como igualdades (==), desigualdades (<, >, <=, >=), ou podem ser combinações mais complexas de várias condições usando operadores lógicos, como & (E lógico) e | (OU lógico).
+
+Vamos filtrar carros com cilindros maiores que 6 e potência maior que 200:
+
+
+
+```{r}
+#
+```
+
+
+### Exemplo 3
+
+Quantas amostras existem para cada espécie de flores no conjunto de dados "iris", considerando apenas as amostras em que o comprimento da sépala (Sepal.Length) seja maior ou igual a 5 e a largura da sépala (Sepal.Width) seja menor ou igual a 3? Apresente essa contagem de amostras por espécie em um gráfico de barras.
+
+```{r}
+#
+```
+
+```{r}
+#
+```
+
+```{r}
+#
+```
+
+## `summarise()` e `group_by()`
+
+O `group_by` é uma função do pacote `dplyr` do R, que é usado para agrupar dados em um data frame. Essa função é comumente utilizada em conjunto com outras funções do dplyr, como `summarize`, `mutate` e `filter`, para realizar operações em grupos específicos de dados.
+
+Ao usar a função `group_by`, você especifica uma ou mais colunas do data frame pelas quais deseja agrupar os dados. Em seguida, você pode aplicar outras funções do dplyr a esses grupos, obtendo resultados agregados ou modificando os dados dentro de cada grupo separadamente.
+
+A função summarize permite calcular estatísticas resumidas, como média, soma, mínimo, máximo, contagem, entre outros, para diferentes grupos de dados. Você pode agrupar seus dados usando a função group_by antes de aplicar a função summarize. Isso permite que você especifique as variáveis de agrupamento para as quais deseja calcular as estatísticas resumidas.
+
+
+Neste exemplo, vamos agrupar os carros pelo número de cilindros (cyl) e pelo tipo de transmissão (am). Em seguida, usamos a função summarize para calcular a média da potência (hp), a média do consumo de combustível (mpg) e a contagem do número de carros em cada grupo. O resultado é um novo data frame com as estatísticas resumidas.
+
+```{r}
+#
+```
+
+
+```{r}
+#
+```
+
+### Exemplo 4
+
+Use o pacote dplyr em conjunto com o ggplot2 para realizar uma análise exploratória dos dados e criar uma visualização que **mostre a média de potência (hp) em relação ao número de cilindros (cyl), com as barras agrupadas pelo tipo de transmissão (am)**. 
+
+```{r}
+#
+```
+
+### Exemplo 5
+
+Você possui um conjunto de dados chamado "diamonds" que contém informações sobre características de diamantes, como preço, quilates, corte (cut) e cor (color).
+
+Crie uma visualização em forma de gráfico de barras que mostre a média do preço por quilate (price_per_carat) para cada combinação de corte e cor dos diamantes. Para a visualização, filtre apenas os diamantes que possuem quilates entre 0.5 e 2.
+
+```{r}
+#
+```
+
+# Facet
+
+No contexto do R, uma facet é uma função usada para dividir um gráfico em painéis, permitindo visualizar diferentes grupos ou subconjuntos dos dados de forma separada. 
+
+A função `facet_wrap()` ou `facet_grid()` são exemplos comuns de funções de facet no pacote ggplot2 do R.
+
+Com o `facet_wrap()`, você pode criar uma grade de painéis que organiza os dados em uma única direção (horizontal ou vertical), enquanto o `facet_grid()` permite criar uma grade bidimensional de painéis com base em duas variáveis.
+
+A função facet é útil quando você deseja comparar visualmente diferentes categorias ou níveis de uma variável em seus dados. Por exemplo, se você tiver dados de vendas por região geográfica, poderá usar o facet para criar um gráfico separado para cada região, permitindo comparar as tendências de vendas em cada área de forma mais clara.
+
+
+
+### Exemplo 6
+
+Vamos plotar um gráfico de dispersão com a variável `mpg` (milhas por galão) no eixo x e a variável `wt` (peso) no eixo y. Usamos o `facet_wrap` para criar um gráfico separado para cada nível da variável `cyl` (número de cilindros do carro).
+
+
+```{r}
+#
+```
+
+
+### Exemplo 7
+
+Estamos criando um gráfico de barras usando a variável `cyl` (número de cilindros) no eixo x. Usamos o `facet_grid` para criar uma grade de painéis com base nas variáveis `am` (tipo de transmissão - automático/manual) e `gear` (número de marchas).
+
+```{r}
+#
+```
+
