@@ -1,4 +1,4 @@
-# 📚 Materiais de Monitoria - Análise Exploratória de Dados e Visualização
+# 📚 Materiais de Monitoria R - Análise Exploratória de Dados e Visualização
 
 Este repositório contém todos os materiais de monitoria da disciplina de Análise Exploratória de Dados e Visualização, incluindo slides, códigos e outros recursos utilizados durante as Monitorias.
 
