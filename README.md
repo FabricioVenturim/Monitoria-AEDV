@@ -46,7 +46,7 @@ Para baixar os arquivos, basta abrir seu git bash e digitar o seguinte código: 
 - [📁 Pasta com os Arquivos](https://github.com/FabricioVenturim/Monitoria-AEDV/tree/main/Monitoria%202%20-%20Dplyr)
 - [📄 dplyr](https://dplyr.tidyverse.org/)
 
-## Monitoria Extra - 18/05/2023 📅
+## Monitoria Extra
 
 - Limpeza de dados;
 - Técnicas e práticas para lidar com dados ausentes, dados duplicados, valores discrepantes (outliers) e outros problemas comuns na limpeza de dados.
