@@ -26,6 +26,7 @@ OBS: Recomendo ver o arquivo HTML gerado e ver o código markdown no Rstudio.
 
 OBS: Recomendo ver o arquivo HTML gerado e ver o código markdown no Rstudio.
 
+
 ### Arquivos
 
 - [Pasta com os Arquivos](https://github.com/FabricioVenturim/Monitoria-AEDV/tree/main/Monitoria%201)
@@ -34,6 +35,30 @@ OBS: Recomendo ver o arquivo HTML gerado e ver o código markdown no Rstudio.
 ### Atividade:
 
 **Refazer os gráficos aplicando melhorias e me enviar.**
+
+## Monitoria 2 - 11/05/2023
+
+- Uso do operador pipe;
+- Manipulação de dados com dplyr;
+- Funções essenciais do dplyr para filtrar, selecionar, renomear e agregar dados.
+
+### Arquivos
+
+- [Pasta com os Arquivos](https://github.com/FabricioVenturim/Monitoria-AEDV/tree/main/Monitoria%202%20-%20Dplyr)
+- [dplyr](https://dplyr.tidyverse.org/)
+
+## Monitoria Extra - 18/05/2023
+
+- Limpeza de dados;
+- Técnicas e práticas para lidar com dados ausentes, dados duplicados, valores discrepantes (outliers) e outros problemas comuns na limpeza de dados.
+
+### Arquivos
+
+- [Pasta com os Arquivos](https://github.com/FabricioVenturim/Monitoria-AEDV/tree/main/Monitoria%20Extra)
+- [Tidy Data](https://r4ds.hadley.nz/tidy-data.html)
+- [Cleaning Data](https://r4ds.hadley
+
+
 
 
 
