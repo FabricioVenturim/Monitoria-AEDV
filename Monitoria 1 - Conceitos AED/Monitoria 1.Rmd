@@ -21,6 +21,7 @@ if(!require(utf8)) install.packages("utf8")
 library(utf8)
 Sys.setlocale("LC_ALL", "pt_br.utf-8") 
 ```
+
 ```{r}
 data <- read.csv("pesq_prof.csv")
 ```

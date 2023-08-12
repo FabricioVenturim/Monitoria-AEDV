@@ -1,0 +1,332 @@
+---
+title: "Trabalho AEDV gapminder_parte B"
+author: "Paula Eduarda de Lima."
+date: "2023-05-09"
+output:  
+  html_document:
+    number_sections: no
+    highlight: tango
+    theme: cerulean
+    toc: yes
+    toc_float:
+      collapsed: yes
+      smmoth_scroll: no
+  pdf_document:
+    toc: yes
+---
+
+```{r}
+if(!require(utf8)) install.packages("utf8") 
+
+library(utf8)
+Sys.setlocale("LC_ALL", "pt_br.utf-8") 
+```
+
+```{r}
+if(!require(extrafont)) install.packages("extrafont")
+library(extrafont)
+font_import()
+loadfonts(device = "win")
+```
+
+# Instalando e importando as bibliotecas
+
+```{r}
+if(!require(tidyverse)) install.packages("tidyverse")
+if(!require(ggthemes)) install.packages("ggthemes")
+if(!require(ggplot2)) install.packages("ggplot2")
+if(!require(tidyverse)) install.packages("tidyverse")
+```
+
+```{r}
+library(tidyverse)
+library(ggplot2)
+library(gapminder)
+library(ggthemes)
+```
+
+
+# Os dados
+
+Usaremos os dados da tabela gapminder para fazer nossos gráficos:
+
+```{r}
+gapminder
+```
+
+# Gráficos
+
+-   **1º Gráfico:** A seguir esta o gráfico do exemplo do livro:
+
+```{r}
+graf <- ggplot(data = gapminder, mapping = aes(x= gdpPercap, y = lifeExp)) +
+  geom_point() +
+  geom_smooth(method = "lm") + 
+  scale_x_log10(labels= scales::dollar)
+```
+
+```{r}
+graf
+```
+
+Modificações desse gráfico:
+
+\- adicionar cor aos pontos
+
+\-Mudar o tema de fundo
+
+\-adicionar transparência aos pontos
+
+\- transformar a linha de tendência de azul para preto
+
+\- colocar rótulos dos eixos x e y como 'Pib per capita' e 'Expectativa de vida em anos', respectivamente
+
+\- colocar o título 'Crescimento Econômico e Expectativa de Vida' no gráfico
+
+\- por fim adicionar a fonte como 'Gapminder'. Resultando no seguinte novo gráfico:
+
+```{r}
+graf <- ggplot(data = gapminder, mapping = aes(x= gdpPercap, y = lifeExp)) +
+  geom_point(color = "brown", alpha = 0.5) +
+  geom_smooth(method = "lm", color = "black") + 
+  scale_x_log10(labels= scales::dollar) +
+  theme_igray() +
+  labs(x = "Pib per capita", y = "Expectativa de vida em anos",
+       title = "Crescimento Econômico e Expectativa de Vida",
+       caption = "Fonte: Gapminder.")
+ 
+```
+
+```{r}
+graf
+```
+
+
+- **2º Gráfico:**
+
+Exemplo do livro:
+
+```{r}
+graf <- ggplot(data = gapminder, mapping = aes(x= gdpPercap, y = lifeExp, color = "purple")) +
+  geom_point() +
+  geom_smooth(method = "loess") + 
+  scale_x_log10()
+
+```
+
+```{r}
+graf
+```
+Modificações:
+\- adicionar a cor verde aos pontos
+
+\-adicionar transparência aos pontos
+
+\- transformar a linha de tendência em cinza
+
+\- Alterar o tema de fundo
+
+```{r}
+graf <- ggplot(data = gapminder, mapping = aes(x= gdpPercap, y = lifeExp )) +
+  geom_point(color = "darkgreen", alpha = 0.3) +
+  theme_par() +
+  geom_smooth(method = "loess", color = "gray80") + 
+  scale_x_log10()
+
+```
+
+```{r}
+graf
+```
+
+
+- **3º Gráfico:**
+
+No exemplo do livro estava indicado para usar size = 8, no entanto aperece esse erro:
+
+"Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0. Please use `linewidth` instead."
+
+Tendo isso em vista, eu substitui, como recomendado, por linewidth = 1, de maneira a ficar parecido com o esperado no livro.
+
+```{r}
+graf <- ggplot(data = gapminder, mapping = aes(x= gdpPercap, y = lifeExp)) +
+  geom_point(alpha = 0.3) +
+  geom_smooth(color = "orange", se = FALSE, linewidth = 1, method = "lm") + 
+  scale_x_log10()
+```
+
+```{r}
+graf
+```
+
+Modificações no gráfico:
+
+\- adicionar cor dos pontos relacionada aos continentes
+
+\-tirar toda a transparência dos pontos
+
+\- transformar a linha de tendência para preto
+
+\-colocar o tamanho dos ponto para 0.8
+
+\-colocar o rótulo de cores no topo
+
+
+
+```{r}
+graf <- ggplot(data = gapminder, mapping = aes(x= gdpPercap, y = lifeExp, color = continent)) +
+  geom_point(size = 0.8) +
+  theme(legend.position = "top") +
+  geom_smooth(color = "black", se = FALSE, linewidth = 1, method = "lm") + 
+  scale_x_log10()
+```
+
+```{r}
+graf
+```
+
+
+- **4º Gráfico:**
+
+```{r}
+graf <- ggplot(data = gapminder, mapping = aes(x= gdpPercap, y = lifeExp)) +
+  
+  geom_point(alpha = 0.3) +
+  
+  geom_smooth(method = "gam") + 
+  
+  scale_x_log10(labels= scales::dollar) +
+  
+  labs(x = "GDP Per Capita", y = "Life Expectancy in Years",
+       title = "Economic Growth and Life Expectancy",
+       subtitle = "Data points are contry-years",
+       caption = "Source: Gapminder.")
+
+```
+
+```{r}
+graf
+
+```
+
+Modificações no gráfico:
+
+\- Modificar os rótulos e títulos para uma versão traduzida em português
+
+\- Mudar o tema de fundo 
+
+\- adicionar cor dos pontos relacionada aos continentes
+
+\- mudar a paleta de cores para PRGn 
+
+\-tirar toda a transparência dos pontos
+
+\- transformar a linha de tendência para cinza
+
+
+
+```{r}
+graf <- ggplot(data = gapminder, mapping = aes(x= gdpPercap, y = lifeExp, color = continent, fill = continent)) +
+  
+  scale_color_brewer(palette = "PRGn") +
+  
+  geom_point() +
+  
+  theme_classic() +
+  
+  geom_smooth(color = "gray", method = "gam") + 
+  
+  scale_x_log10(labels= scales::dollar) +
+  
+  labs(x = "PIB per capita", y = "Expectativa de vida em anos",
+       title = "Crescimento econômico e expectativa de vida",
+       subtitle = "Os pontos dos dados são os países",
+       caption = "Fonte: Gapminder.")
+
+```
+
+```{r}
+graf
+
+```
+
+
+- **5º Gráfico:**
+
+```{r}
+graf <- ggplot(data = gapminder, mapping = aes(x= gdpPercap, y = lifeExp, color = continent, fill = continent)) +
+  geom_point() +
+  geom_smooth(method = "loess") + 
+  scale_x_log10(labels= scales::dollar)
+```
+
+```{r}
+graf
+```
+Modificações no gráfico:
+
+
+\- Mudar o tema de fundo 
+
+\- adicionar cor dos pontos relacionada aos continentes
+
+\- mudar a paleta de cores para PRGn 
+
+\-tirar toda a transparência dos pontos
+
+\- transformar a linha de tendência para cinza
+
+
+```{r}
+graf <- ggplot(data = gapminder, mapping = aes(x= gdpPercap, y = lifeExp, color = continent, fill = continent)) +
+  scale_color_brewer(palette = "Bupu") +
+  theme_stata(base_size = 11, base_family = "sans", scheme = "s2color")+
+  geom_point() +
+  geom_smooth(method = "loess") + 
+  scale_x_log10(labels= scales::dollar)+
+  geom_vline(xintercept = 10000)
+  
+```
+
+```{r}
+graf
+```
+
+```{r}
+
+```
+
+- **6º Gráfico: **
+
+```{r}
+graf <- ggplot(data = gapminder, mapping = aes(x= gdpPercap, y = lifeExp)) +
+  
+  geom_point(mapping = aes(color = log(pop))) +
+   
+  scale_x_log10()
+```
+
+```{r}
+graf
+```
+
+Modificações no gráfico:
+
+\- Mudar o tema de fundo 
+
+```{r}
+graf <- ggplot(data = gapminder, mapping = aes(x= gdpPercap, y = lifeExp)) +
+  
+  geom_point(mapping = aes(color = log(pop))) +
+  
+  theme_solarized_2()+
+  
+  
+  scale_x_log10()
+```
+
+```{r}
+graf
+```
+
+

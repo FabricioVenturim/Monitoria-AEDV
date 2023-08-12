@@ -1,0 +1,66 @@
+---
+title: "Markdown - Aula 0"
+author: "Fabrício Venturim"
+date: "2023-04-25"
+output: 
+  html_document:
+    number_sections: yes
+    highlight: tango
+    theme: cerulean
+    toc: yes
+    toc_float:
+      collapsed: yes
+      smmoth_scroll: no
+  pdf_document:
+    toc: yes
+---
+
+```{r}
+if(!require(utf8)) install.packages("utf8") 
+
+library(utf8)
+Sys.setlocale("LC_ALL", "pt_br.utf-8") 
+```
+
+# Análise Exploratória de Dados
+
+Aprenderemos como usar a visualização e a transformação para explorar seus dados de maneira sistemática.
+
+A Análise Exploratória de Dados (AED) é uma das etapas fundamentais no processo de análise de dados. Ela tem como objetivo compreender os dados disponíveis, identificar padrões, tendências, valores extremos e outras características importantes dos dados. A AED pode ser realizada por meio de **visualizações**, **estatísticas descritivas** e outras técnicas exploratórias.
+
+O R é uma linguagem de programação muito utilizada em análise de dados e possui diversas bibliotecas e ferramentas que facilitam a realização da AED. Uma das bibliotecas mais populares é o tidyverse, que contém uma série de pacotes que permitem a manipulação, visualização e modelagem de dados.
+
+Neste documento, iremos explorar algumas técnicas de AED utilizando o R e o tidyverse. Iremos aprender como carregar dados em R, manipulá-los e visualizá-los para obter insights valiosos sobre o conjunto de dados. Além disso, iremos explorar técnicas de limpeza e pré-processamento de dados para garantir que os dados estejam prontos para serem utilizados em análises mais avançadas.
+
+>“Far better an approximate answer to the right question, which is often vague, than an exact answer to the wrong question, which can always be made precise.” — **John Tukey**
+
+Seu objetivo durante a EDA é desenvolver uma compreensão de seus dados. A maneira mais fácil de fazer isso é usar perguntas como ferramentas para orientar sua investigação. Quando você faz uma pergunta, ela concentra sua atenção em uma parte específica do seu conjunto de dados e ajuda a decidir quais gráficos, modelos ou transformações fazer.
+
+**Uma postura crucial é compreender os conceitos fundamentais da AED, uma vez que, tendo uma compreensão clara da teoria e do processo de análise, a escolha da linguagem de programação torna-se menos relevante. Isso significa que os conceitos abordados são aplicáveis não apenas ao R, mas a outras linguagens também.**
+
+
+## Componentes da AED
+
+Existem componentes principais na exploração de dados:
+
+1. Entender suas variáveis
+2. Limpar seu conjunto de dados (Próxima aula)
+3. Analisar relações entre variáveis
+
+## Pré-requisitos
+
+Vamos importar a biblioteca do `tidyverse`.
+
+```{r warning=FALSE}
+install.packages("tidyverse")
+```
+
+```{r}
+if(!require(tidyverse)){
+  install.packages("tidyverse")
+}
+```
+
+```{r}
+if(!require(tidyverse)) install.packages("tidyverse")
+```
