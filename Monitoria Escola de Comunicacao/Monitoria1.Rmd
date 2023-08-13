@@ -1,5 +1,5 @@
 ---
-title: "Markdown - Aula 0"
+title: "AED Conceitos - Aula 1"
 author: "Fabrício Venturim"
 date: "2023-04-25"
 output: 
@@ -63,4 +63,189 @@ if(!require(tidyverse)){
 
 ```{r}
 if(!require(tidyverse)) install.packages("tidyverse")
+if(!require(ggthemes)) install.packages("ggthemes")
+```
+
+```{r}
+library(tidyverse)
+library(ggthemes)
+```
+
+## Dados da Tarefa
+
+
+```{r}
+if(!require(gapminder)) install.packages("gapminder")
+```
+
+
+```{r}
+library(gapminder)
+```
+
+```{r}
+gapminder
+```
+
+## Gráficos
+
+* **1º Gráfico:** A seguir esta o gráfico do exemplo do livro:
+
+```{r}
+graf <- ggplot(data = gapminder, mapping = aes(x= gdpPercap, y = lifeExp)) +
+  geom_point() +
+  geom_smooth(method = "lm") + 
+  scale_x_log10(labels= scales::dollar)
+```
+
+```{r}
+graf
+```
+
+```{r}
+graf <- ggplot(data = gapminder, mapping = aes(x= gdpPercap, y = lifeExp)) +
+  geom_point(color = "brown", alpha = 0.5) +
+  geom_smooth(method = "lm", color = "black") + 
+  scale_x_log10(labels= scales::dollar) +
+  theme_igray() +
+  labs(x = "Pib per capita", y = "Expectativa de vida em anos",
+       title = "Crescimento Econômico e Expectativa de Vida",
+       caption = "Fonte: Gapminder.")
+```
+
+```{r}
+graf
+```
+
+
+## Leitura de dataframe por csv
+
+O livro “Estatística Básica” de W. O. Bussab e P. A. Morettin traz no segundo capítulo um conjunto de dados hipotético de atributos de 36 funcionários da companhia “Milsa”. Os dados estão reproduzidos na tabela abaixo. Consulte o livro para mais detalhes sobre este dados.
+
+Ler o csv `Tabela1.csv`:
+
+```{r}
+milsa <- read.csv("data/Tabela1.csv")
+```
+
+```{r}
+milsa
+```
+
+## Estrutura do Dataframe
+
+### Adicionar Colunas no Dataframe
+
+Podemos definir uma nova variável (coluna), por exemplo, chamada `Idade`, a partir das variáveis `Anos` e `Meses`:
+
+```{r}
+milsa$Idade <- milsa$Anos + milsa$Meses/12
+```
+
+```{r}
+milsa
+```
+
+* Adicionar coluna: `table$colunaNova`
+
+* Atualizar coluna: `table$colunaAtualizar`
+
+## Excluir Coluna
+
+Também podemos excluir coluna do nosso dataframe:
+
+
+```{r}
+milsa <- subset(milsa, select = -X)
+```
+
+
+Se quiser apagar mais de uma coluna, utilize: `milsa <- subset(milsa, select = -c(Meses, Ano))`.
+
+## Mudar Nome de colunas
+
+Para ver os nomes das colunas do nosso dataframe, podemos utilizar a função `names()`.
+
+```{r}
+names(milsa)
+```
+Alguns nomes estão escritos de forma estranha e pode facilitar futuras análises alterar o nome delas. Podemos alterar o nome das colunas usando um filtro no `names`:
+
+```{r}
+names(milsa)[names(milsa) == "Salario..x.Sal.Min."] <- "Salario"
+names(milsa)[names(milsa) == "N.de.Filhos"] <- "Filhos"
+names(milsa)[names(milsa) == "Grau.de.Instrução"] <- "Grau_Instrucao"
+names(milsa)[names(milsa) == "Região.de.Procedência"] <- "Regiao_Procedencia"
+names(milsa)[names(milsa) == "Estado.Civil"] <- "Estado_Civil"
+```
+
+```{r}
+milsa
+```
+
+## Medidas Estatísticas 
+
+Uma boa forma de iniciar uma análise exploratória adequada é verificar os tipos de variáveis disponíveis. Variáveis podem ser classificadas da seguinte forma:
+
+* Qualitativas
+  * Nominais
+  * Ordinais
+* Quantitativas
+  * Discretas
+  * Contínuas
+  
+e podem ser resumidas por tabelas, gráficos e/ou medidas.
+
+### Variável Quantitativa Discreta
+
+Vamos agora usar a variável `Filhos` (número de filhos) para ilustrar algumas análises que podem ser feitas com uma quantitativa discreta.
+
+Frequências absolutas e relativas são obtidas como anteriormente. Também vamos calcular a frequência acumulada, onde a frequência em uma classe é a soma das frequências das classes anteriores. Para isso usamos a função `cumsum()`, que já faz a soma acumulada.
+
+```{r}
+filhos_tb <- table(milsa$Filhos)
+filhos_tb
+```
+
+```{r}
+filhos_tbr <- prop.table(filhos_tb)
+filhos_tbr
+```
+
+#### Frequência Acumulada
+
+```{r}
+freq_rel_acum <- cumsum(filhos_tbr)
+freq_rel_acum
+```
+
+#### Gráfico de Frequência
+
+O gráfico adequado para frequências absolutas de uma variável discreta é parecido com um gráfico de barras, mas nesse caso, as frequências são indicadas por linhas. 
+
+```{r}
+ggplot(milsa, aes(x = Filhos)) + geom_bar()
+```
+
+#### Medidas (moda, mediana e média)
+
+```{r}
+names(filhos_tb)[which.max(filhos_tb)]
+```
+
+```{r}
+median(milsa$Filhos)
+```
+
+```{r}
+mean(milsa$Filhos)
+```
+
+
+#### Forma Prática
+
+Podemos usar a função genérica `summary()` para resumir os dados de uma só vez:
+
+```{r}
+summary(milsa$Filhos)
 ```
